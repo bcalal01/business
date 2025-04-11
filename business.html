@@ -14,9 +14,10 @@
     button {
         font-size: 50px;
         margin: 0px 20px;
+        font-family: 'Times New Roman', Times, serif;
     }
 
-    #controls {
+    .controls {
         width: fit-content;
         margin: auto;
     }
@@ -31,14 +32,17 @@
 <div id="stats_holder">
     <canvas id="stats_canvas" width="900" height="215"></canvas>
 </div>
-<div id="controls">
+<div id="controls1" class="controls">
     <button onclick="start()">Send Email</button>
     <button onclick="eat()">Eat</button>
     <button onclick="consume()">Consume</button>
+</div>
+<div id="controls2" class="controls">
     <button onclick="nap()">Rest</button>
     <button onclick="shop()">Shop</button>
     <button onclick="gamble()">Gamble</button>
 </div>
+
 </div>
 
 <script>
@@ -46,57 +50,57 @@
 const ctx = document.getElementById("myCanvas").getContext("2d");
 const stats = document.getElementById("stats_canvas").getContext("2d");
 const base = new Image();
-base.src = "base.jpg";
+base.src = "images/base.jpg";
 const comp = new Image();
-comp.src = "comp.jpg";
+comp.src = "images/comp.jpg";
 const blink = new Image();
-blink.src = "blink.jpg";
+blink.src = "images/blink.jpg";
 const eat0 = new Image();
-eat0.src = "eat0.jpg";
+eat0.src = "images/eat0.jpg";
 const eat1 = new Image();
-eat1.src = "eat1.jpg";
+eat1.src = "images/eat1.jpg";
 const eat2 = new Image();
-eat2.src = "eat2.jpg";
+eat2.src = "images/eat2.jpg";
 const eat3 = new Image();
-eat3.src = "eat3.jpg";
+eat3.src = "images/eat3.jpg";
 const eat4 = new Image();
-eat4.src = "eat4.jpg";
+eat4.src = "images/eat4.jpg";
 const eat5 = new Image();
-eat5.src = "eat5.jpg";
+eat5.src = "images/eat5.jpg";
 const consume1 = new Image();
-consume1.src = "consume1.jpg";
+consume1.src = "images/consume1.jpg";
 const consume2 = new Image();
-consume2.src = "consume2.jpg";
+consume2.src = "images/consume2.jpg";
 const consume3 = new Image();
-consume3.src = "consume3.jpg";
+consume3.src = "images/consume3.jpg";
 const consume4 = new Image();
-consume4.src = "consume4.jpg";
+consume4.src = "images/consume4.jpg";
 const consume5 = new Image();
-consume5.src = "consume5.jpg";
+consume5.src = "images/consume5.jpg";
 const consume6 = new Image();
-consume6.src = "consume6.jpg";
+consume6.src = "images/consume6.jpg";
 const consume7 = new Image();
-consume7.src = "consume7.jpg";
+consume7.src = "images/consume7.jpg";
 const consume8 = new Image();
-consume8.src = "consume8.jpg";
+consume8.src = "images/consume8.jpg";
 const dead = new Image();
-dead.src = "dead.jpg";
+dead.src = "images/dead.jpg";
 const shop1 = new Image;
-shop1.src = "shop1.jpg";
+shop1.src = "images/shop1.jpg";
 const shop2 = new Image;
-shop2.src = "shop2.jpg";
+shop2.src = "images/shop2.jpg";
 const gamble1 = new Image();
-gamble1.src = "gamble1.jpg";
+gamble1.src = "images/gamble1.jpg";
 const gamble2 = new Image();
-gamble2.src = "gamble2.jpg";
+gamble2.src = "images/gamble2.jpg";
 const gamble3 = new Image();
-gamble3.src = "gamble3.jpg";
+gamble3.src = "images/gamble3.jpg";
 const gamble4 = new Image();
-gamble4.src = "gamble4.jpg";
+gamble4.src = "images/gamble4.jpg";
 const gamblewin = new Image();
-gamblewin.src = "gamblewin.jpg";
+gamblewin.src = "images/gamblewin.jpg";
 const gamblelose = new Image();
-gamblelose.src = "gamblelose.jpg";
+gamblelose.src = "images/gamblelose.jpg";
 const messages = [[["Hello ", "Diane", ", ", "", ""], [""], ["Per ", "my ", "last ", "email", ", ", "I ", "had ", "concerns ", "regarding"], ["our ", "quarterly ", "presentation", ".", "", ""], ["Please ", "message ", "me ", "back", "."]],
                     [["Hello ", "Brian", ",", "", ""], [""], ["I ", "need ", "those ", "reports ", "by ", "EOD ", "ASAP ", "PLS "], ["TYSM ", "TTYL ", "ILY", "."]],
                     [["Hello ", "Mike", ",", "", ""], [""], ["Were ", "you ", "free ", "to ", "chat ", "tomorrow ", "at ", "noon", "?"]],
