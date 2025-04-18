@@ -22,12 +22,21 @@
         margin: auto;
     }
 
-
+    #border-cover {
+        width: 5px;
+        height: 1200px;
+        position: absolute;
+        background-color: rgb(255, 255, 255);
+        right: 36px;
+    }
     
 </style>
 </head>
 <html>
 <body>
+<div id="border-cover">
+
+</div>
 <div id="container">
 <div id="canvas_holder">
     <canvas id="myCanvas" width="900" height="960"></canvas>
@@ -452,15 +461,15 @@ function death_message(death) {
     }
 
     if (death == 2) {
-        ctx.fillText("He died of poor health.", 15, 50)
+        ctx.fillText("He died of poor health.", 15, 85)
     }
 
     if (death == 3) {
-        ctx.fillText("He died from a sad, miserable existence.", 15, 50);
+        ctx.fillText("He died from a sad, miserable existence.", 15, 85);
     }
 
     if (death == 4) {
-        ctx.fillText("He died of poverty.", 15, 50);
+        ctx.fillText("He died of poverty.", 15, 85);
     }
 }
 
