@@ -14,36 +14,44 @@
     button {
         font-size: 50px;
         margin: 0px 20px;
+        font-family: 'Times New Roman', Times, serif;
     }
 
-    #controls {
+    .controls {
         width: fit-content;
         margin: auto;
     }
+
+
+    
 </style>
 </head>
 <html>
 <body>
-<div>
+<div id="container">
 <div id="canvas_holder">
     <canvas id="myCanvas" width="900" height="960"></canvas>
 </div>
 <div id="stats_holder">
     <canvas id="stats_canvas" width="900" height="215"></canvas>
 </div>
-<div id="controls">
+<div id="controls1" class="controls">
     <button onclick="start()">Send Email</button>
     <button onclick="eat()">Eat</button>
     <button onclick="consume()">Consume</button>
+</div>
+<div id="controls2" class="controls">
     <button onclick="nap()">Rest</button>
     <button onclick="shop()">Shop</button>
     <button onclick="gamble()">Gamble</button>
 </div>
+
 </div>
 
 <script>
 
-const ctx = document.getElementById("myCanvas").getContext("2d");
+const main_canvas = document.getElementById("myCanvas")
+const ctx = main_canvas.getContext("2d");
 const stats = document.getElementById("stats_canvas").getContext("2d");
 const base = new Image();
 base.src = "images/base.jpg";
@@ -144,34 +152,61 @@ let money = 50;
 let stop = 0;
 let kill = false;
 
-ctx.font = "50px serif";
+let screen_width = window.screen.width;
+var image_width;
+var line_height;
+var clear_height;
+
 stats.font = "40px serif";
 
 base.addEventListener("load", () => {
-    //curr_email = Math.floor(Math.random() * emails);
-    curr_email = emails - 1;
-    ctx.drawImage(base,0,100,900,900);
+    initialize_mobile();
+    curr_email = Math.floor(Math.random() * emails);
+    //curr_email = emails - 1;
+    ctx.drawImage(base,0,100,image_width, image_width);
     display_stats();
     setInterval(blinkcycle, 4000);
+    console.log(screen_width);
+    ctx.fillText("Help Barry send emails and keep him alive!", 10, 85);
+
 });
+
+function initialize_desktop() {
+    image_width = 600;
+    main_canvas.width = 600;
+    ctx.font = "32px serif";
+    line_height = 32;
+    clear_height = 200;
+    document.getElementById('canvas_holder').style.display = "inline-block";
+    document.getElementById('stats_holder').style.display = "inline-block";
+    document.getElementById('container').style.display = "flex";
+}
+
+function initialize_mobile() {
+    image_width = 900;
+    ctx.font = "50px serif";
+    line_height = 50;
+    clear_height = 260;
+}
 
 function blinkcycle() {
     if (!working) {
-        ctx.drawImage(blink,0,100,900,900);
-        setTimeout(function() {ctx.drawImage(base,0,100,900,900)}, 50);
+        ctx.drawImage(blink,0,100,image_width, image_width);
+        setTimeout(function() {ctx.drawImage(base,0,100,image_width, image_width)}, 50);
     }
 }
 
 function shop() {
     if (!working) {
         working = true;
+        ctx.clearRect(0, 0, 900, clear_height);
         update_stats(-7, 0, shop_happiness, -20);
         shop_happiness *= .75;
-        setTimeout(function() {ctx.drawImage(shop1,0,100,900,900)}, 50);
-        setTimeout(function() {ctx.drawImage(shop2,0,100,900,900)}, 200);
-        setTimeout(function() {ctx.drawImage(blink,0,100,900,900)}, 1500);
+        setTimeout(function() {ctx.drawImage(shop1,0,100,image_width, image_width)}, 50);
+        setTimeout(function() {ctx.drawImage(shop2,0,100,image_width, image_width)}, 200);
+        setTimeout(function() {ctx.drawImage(blink,0,100,image_width, image_width)}, 1500);
         setTimeout(function() {
-            ctx.drawImage(base,0,100,900,900);
+            ctx.drawImage(base,0,100,image_width, image_width);
             display_stats();}, 1550);
         if (!kill) {
             setTimeout(function() {working = false}, 1650);
@@ -182,63 +217,64 @@ function shop() {
 function gamble() {
     if (!working) {
         working = true;
+        ctx.clearRect(0, 0, 900, clear_height);
         let gamble_result = Math.floor(Math.random() * 4);
         if (gamble_result % 2 == 0) {
             update_stats(-7, -2, 10, 15);
         } else {
             update_stats(-7, -2, -10, -15);
         }
-        setTimeout(function() {ctx.drawImage(gamble1,0,100,900,900)}, 50);
-        setTimeout(function() {ctx.drawImage(gamble2,0,100,900,900)}, 250);
-        setTimeout(function() {ctx.drawImage(gamble3,0,100,900,900)}, 300);
-        setTimeout(function() {ctx.drawImage(gamble4,0,100,900,900)}, 350);
-        setTimeout(function() {ctx.drawImage(gamble1,0,100,900,900)}, 450);
-        setTimeout(function() {ctx.drawImage(gamble2,0,100,900,900)}, 550);
-        setTimeout(function() {ctx.drawImage(gamble3,0,100,900,900)}, 650);
-        setTimeout(function() {ctx.drawImage(gamble4,0,100,900,900)}, 800);
-        setTimeout(function() {ctx.drawImage(gamble1,0,100,900,900)}, 950);
-        setTimeout(function() {ctx.drawImage(gamble2,0,100,900,900)}, 1100);
-        setTimeout(function() {ctx.drawImage(gamble3,0,100,900,900)}, 1250);
-        setTimeout(function() {ctx.drawImage(gamble4,0,100,900,900)}, 1450);
-        setTimeout(function() {ctx.drawImage(gamble1,0,100,900,900)}, 1650);
-        setTimeout(function() {ctx.drawImage(gamble2,0,100,900,900)}, 1850);
+        setTimeout(function() {ctx.drawImage(gamble1,0,100,image_width, image_width)}, 50);
+        setTimeout(function() {ctx.drawImage(gamble2,0,100,image_width, image_width)}, 250);
+        setTimeout(function() {ctx.drawImage(gamble3,0,100,image_width, image_width)}, 300);
+        setTimeout(function() {ctx.drawImage(gamble4,0,100,image_width, image_width)}, 350);
+        setTimeout(function() {ctx.drawImage(gamble1,0,100,image_width, image_width)}, 450);
+        setTimeout(function() {ctx.drawImage(gamble2,0,100,image_width, image_width)}, 550);
+        setTimeout(function() {ctx.drawImage(gamble3,0,100,image_width, image_width)}, 650);
+        setTimeout(function() {ctx.drawImage(gamble4,0,100,image_width, image_width)}, 800);
+        setTimeout(function() {ctx.drawImage(gamble1,0,100,image_width, image_width)}, 950);
+        setTimeout(function() {ctx.drawImage(gamble2,0,100,image_width, image_width)}, 1100);
+        setTimeout(function() {ctx.drawImage(gamble3,0,100,image_width, image_width)}, 1250);
+        setTimeout(function() {ctx.drawImage(gamble4,0,100,image_width, image_width)}, 1450);
+        setTimeout(function() {ctx.drawImage(gamble1,0,100,image_width, image_width)}, 1650);
+        setTimeout(function() {ctx.drawImage(gamble2,0,100,image_width, image_width)}, 1850);
         if (gamble_result == 1) {
-            setTimeout(function() {ctx.drawImage(gamblelose,0,100,900,900)}, 2350);
+            setTimeout(function() {ctx.drawImage(gamblelose,0,100,image_width, image_width)}, 2350);
             setTimeout(function() {
-                ctx.drawImage(base,0,100,900,900);
+                ctx.drawImage(base,0,100,image_width, image_width);
                 display_stats(); 
             }, 2850);
             if (!kill) {
                 setTimeout(function() {working = false}, 3000);
             }
         } else if (gamble_result == 2) {
-            setTimeout(function() {ctx.drawImage(gamble3,0,100,900,900)}, 2050);
-            setTimeout(function() {ctx.drawImage(gamblewin,0,100,900,900)}, 2550);
+            setTimeout(function() {ctx.drawImage(gamble3,0,100,image_width, image_width)}, 2050);
+            setTimeout(function() {ctx.drawImage(gamblewin,0,100,image_width, image_width)}, 2550);
             setTimeout(function() {
-                ctx.drawImage(base,0,100,900,900);
+                ctx.drawImage(base,0,100,image_width, image_width);
                 display_stats(); 
             }, 3050);
             if (!kill) {
                 setTimeout(function() {working = false}, 3200);
             }
         } else if (gamble_result == 3) {
-            setTimeout(function() {ctx.drawImage(gamble3,0,100,900,900)}, 2050);
-            setTimeout(function() {ctx.drawImage(gamble4,0,100,900,900)}, 2250);
-            setTimeout(function() {ctx.drawImage(gamblelose,0,100,900,900)}, 2750);
+            setTimeout(function() {ctx.drawImage(gamble3,0,100,image_width, image_width)}, 2050);
+            setTimeout(function() {ctx.drawImage(gamble4,0,100,image_width, image_width)}, 2250);
+            setTimeout(function() {ctx.drawImage(gamblelose,0,100,image_width, image_width)}, 2750);
             setTimeout(function() {
-                ctx.drawImage(base,0,100,900,900);
+                ctx.drawImage(base,0,100,image_width, image_width);
                 display_stats(); 
             }, 3250);
             if (!kill) {
                 setTimeout(function() {working = false}, 3400);
             }
         } else if (gamble_result == 0) {
-            setTimeout(function() {ctx.drawImage(gamble3,0,100,900,900)}, 2050);
-            setTimeout(function() {ctx.drawImage(gamble4,0,100,900,900)}, 2250);
-            setTimeout(function() {ctx.drawImage(gamble1,0,100,900,900)}, 2450);
-            setTimeout(function() {ctx.drawImage(gamblewin,0,100,900,900)}, 2950);
+            setTimeout(function() {ctx.drawImage(gamble3,0,100,image_width, image_width)}, 2050);
+            setTimeout(function() {ctx.drawImage(gamble4,0,100,image_width, image_width)}, 2250);
+            setTimeout(function() {ctx.drawImage(gamble1,0,100,image_width, image_width)}, 2450);
+            setTimeout(function() {ctx.drawImage(gamblewin,0,100,image_width, image_width)}, 2950);
             setTimeout(function() {
-                ctx.drawImage(base,0,100,900,900);
+                ctx.drawImage(base,0,100,image_width, image_width);
                 display_stats(); 
             }, 3450);
             if (!kill) {
@@ -250,20 +286,21 @@ function gamble() {
 
 function consume() {
     if (!working) {
+        working = true;
+        ctx.clearRect(0, 0, 900, clear_height);
         update_stats(-12, -2, consume_happiness, -5);
         consume_happiness *= .75;
-        working = true;
-        setTimeout(function() {ctx.drawImage(consume1,0,100,900,900)}, 50);
-        setTimeout(function() {ctx.drawImage(consume2,0,100,900,900)}, 200);
-        setTimeout(function() {ctx.drawImage(consume3,0,100,900,900)}, 350);
-        setTimeout(function() {ctx.drawImage(consume4,0,100,900,900)}, 500);
-        setTimeout(function() {ctx.drawImage(consume5,0,100,900,900)}, 650);
-        setTimeout(function() {ctx.drawImage(consume6,0,100,900,900)}, 800);
-        setTimeout(function() {ctx.drawImage(consume7,0,100,900,900)}, 950);
-        setTimeout(function() {ctx.drawImage(consume8,0,100,900,900)}, 1100);
+        setTimeout(function() {ctx.drawImage(consume1,0,100,image_width, image_width)}, 50);
+        setTimeout(function() {ctx.drawImage(consume2,0,100,image_width, image_width)}, 200);
+        setTimeout(function() {ctx.drawImage(consume3,0,100,image_width, image_width)}, 350);
+        setTimeout(function() {ctx.drawImage(consume4,0,100,image_width, image_width)}, 500);
+        setTimeout(function() {ctx.drawImage(consume5,0,100,image_width, image_width)}, 650);
+        setTimeout(function() {ctx.drawImage(consume6,0,100,image_width, image_width)}, 800);
+        setTimeout(function() {ctx.drawImage(consume7,0,100,image_width, image_width)}, 950);
+        setTimeout(function() {ctx.drawImage(consume8,0,100,image_width, image_width)}, 1100);
 
         setTimeout(function() {
-            ctx.drawImage(base,0,100,900,900);
+            ctx.drawImage(base,0,100,image_width, image_width);
             display_stats();}, 1250);
         if (!kill) {
             setTimeout(function() {working = false}, 1400);
@@ -273,18 +310,19 @@ function consume() {
 
 function nap() {
     if (!working) {
-        update_stats(-14, 8, 2, 0);
         working = true;
+        ctx.clearRect(0, 0, 900, clear_height);
+        update_stats(-14, 8, 2, 0);
 
-        ctx.drawImage(blink,0,100,900,900);
-        setTimeout(function() {ctx.drawImage(blink,0,100,900,900)}, 400);
+        ctx.drawImage(blink,0,100,image_width, image_width);
+        setTimeout(function() {ctx.drawImage(blink,0,100,image_width, image_width)}, 400);
         setTimeout(function() {ctx.fillText("Z", 400, 250);}, 500);
         setTimeout(function() {ctx.fillText("Z Z", 400, 250);}, 1000);
         setTimeout(function() {ctx.fillText("Z Z Z", 400, 250);}, 1500);
-        setTimeout(function() {ctx.drawImage(base,0,100,900,900)}, 2000);
-        setTimeout(function() {ctx.drawImage(blink,0,100,900,900)}, 2050);
+        setTimeout(function() {ctx.drawImage(base,0,100,image_width, image_width)}, 2000);
+        setTimeout(function() {ctx.drawImage(blink,0,100,image_width, image_width)}, 2050);
         setTimeout(function() {
-            ctx.drawImage(base,0,100,900,900);
+            ctx.drawImage(base,0,100,image_width, image_width);
             display_stats();
         }, 2100);
         if (!kill) {
@@ -300,16 +338,17 @@ function win() {
 function eat() {
     if (!working) {
         working = true;
+        ctx.clearRect(0, 0, 900, clear_height);
         update_stats(-4, 6, 2, -5);
-        setTimeout(function() {ctx.drawImage(eat0,0,100,900,900)}, 0);
-        setTimeout(function() {ctx.drawImage(eat1,0,100,900,900)}, 500);
-        setTimeout(function() {ctx.drawImage(eat2,0,100,900,900)}, 700);
-        setTimeout(function() {ctx.drawImage(eat3,0,100,900,900)}, 900);
-        setTimeout(function() {ctx.drawImage(eat4,0,100,900,900)}, 1100);
-        setTimeout(function() {ctx.drawImage(eat5,0,100,900,900)}, 1300);
-        setTimeout(function() {ctx.drawImage(blink,0,100,900,900)}, 1500);
+        setTimeout(function() {ctx.drawImage(eat0,0,100,image_width, image_width)}, 0);
+        setTimeout(function() {ctx.drawImage(eat1,0,100,image_width, image_width)}, 500);
+        setTimeout(function() {ctx.drawImage(eat2,0,100,image_width, image_width)}, 700);
+        setTimeout(function() {ctx.drawImage(eat3,0,100,image_width, image_width)}, 900);
+        setTimeout(function() {ctx.drawImage(eat4,0,100,image_width, image_width)}, 1100);
+        setTimeout(function() {ctx.drawImage(eat5,0,100,image_width, image_width)}, 1300);
+        setTimeout(function() {ctx.drawImage(blink,0,100,image_width, image_width)}, 1500);
         setTimeout(function() {
-            ctx.drawImage(base,0,100,900,900);
+            ctx.drawImage(base,0,100,image_width, image_width);
             display_stats();}, 1550);
         if (!kill) {
             setTimeout(function() {working = false}, 1900);
@@ -358,8 +397,8 @@ function start() {
     if (!working) {
         working = true;
         emails_sent++;
-        ctx.drawImage(comp,0,100,900,900);
-        ctx.clearRect(0, 0, 900, 260);
+        ctx.drawImage(comp,0,100,image_width, image_width);
+        ctx.clearRect(0, 0, 900, clear_height);
         setTimeout(email, 500);
     }
 }
@@ -377,7 +416,7 @@ function email() {
   function type() {
         let words = curr_message[line_num].length;
         message += curr_message[line_num][word_num];
-        let y_position = 50 * (line_num + 1);
+        let y_position = line_height * (line_num + 1);
         //ctx.clearRect(0, 0, 900, 300);
         ctx.fillText(message, 10, y_position);
         word_num++;
@@ -394,12 +433,12 @@ function email() {
 }
 
 function stop_typing() {
-    ctx.clearRect(0, 0, 900, 260);
-    ctx.drawImage(blink,0,100,900,900);
+    ctx.clearRect(0, 0, 900, clear_height);
+    ctx.drawImage(blink,0,100,image_width, image_width);
     update_stats(10, -3, -9, 5);
     display_stats();
     if (!kill) {
-        setTimeout(function() {ctx.drawImage(base,0,100,900,900)}, 50);
+        setTimeout(function() {ctx.drawImage(base,0,100,image_width, image_width)}, 50);
         setTimeout(function() {working = false}, 200);
     }
 }
@@ -456,7 +495,7 @@ function display_stats() {
 
     if (kill) {
         death_message(stop);
-        ctx.drawImage(dead,0,100,900,900);
+        ctx.drawImage(dead,0,100,image_width, image_width);
     }
 }
 
